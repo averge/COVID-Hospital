@@ -1,0 +1,391 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: "DIN Next", sans-serif;
+}
+
+a {
+    text-decoration: none;
+}
+
+.flex-main {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+header {
+    background: #96c3ec;
+    flex: 0 0 50px;
+    overflow: hidden;
+}
+
+#content {
+    background: #dfe6ed;
+    flex: 1;
+    padding: 15px;
+}
+
+.big-font {
+    font-size: 24px;
+}
+
+.big-font div {
+    padding: 10px 0;
+}
+
+.new-patient-dni {
+    display: flex;
+}
+
+.new-patient-dni .form-field {
+    align-self: center;
+}
+
+input[type="text"], input[type="number"], input[type="email"] {
+    width: 300px;
+}
+
+hr {
+    border-color: #99bbd9;
+    width: 100%;
+}
+
+.patient-info {
+    display: flex;
+    justify-content: space-between;
+}
+
+.patient-info .patient-contact {
+    background: #c3cfd9;
+    width: 40%;
+    padding: 0 50px 50px 15px;
+}
+
+.patient-info .patient-personal {
+    width: 56%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
+
+.buttons {
+    display: flex;
+    justify-content: center;
+}
+
+button, .buttons a, .buttons input {
+    border: none;
+    border-radius: 6%;
+    background: #2c88d9;
+    cursor: pointer;
+    color: white;
+    margin: 0 15px;
+    padding: 10px 15px;
+    font-size: 15px;
+}
+
+.buttons .left-button {
+    margin: 0 auto 0 0;
+}
+
+.buttons a:visited {
+    color: white;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+header .home-icon {
+    display: flex;
+    color: black;
+}
+
+header .home-icon:visited {
+    color: black;
+}
+
+header .home-icon ion-icon {
+    height: 48px;
+    width: 48px;
+}
+
+.sistemas {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.sistemas .caja-sistema {
+    width: 47%;
+    background: #c3cfd9;
+    padding: 15px;
+    margin-bottom: 15px;
+}
+
+a:visited {
+    color: blue;
+}
+
+.sistema-flex-main {
+    display: flex;
+    justify-content: space-between;
+}
+
+.sistema-flex-main .sistema-salas {
+    width: 60%;
+}
+
+.sistema-flex-main .sistema-camas {
+    width: 37%;
+    background: #c3cfd9;
+    padding: 15px;
+    height: fit-content;
+}
+
+.sistema-flex-main .sala-info {
+    background: #c3cfd9;
+    padding: 15px;
+    margin-bottom: 15px;
+}
+
+.buttons .no-activo {
+    opacity: 50%;
+}
+
+.login-form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+.login-form .login-area {
+    width: 40%;
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+}
+
+.login-form input {
+    margin: 10px 0;
+}
+
+.login-form .buttons {
+    justify-content: left;
+}
+
+.login-form .buttons input {
+    background: #96c3ec;
+    color: black;
+    margin-right: 5px;
+}
+
+.login-form input[type="text"], .login-form input[type="password"] {
+    width: 100%;
+}
+
+.buttons-login {
+    display: flex;
+    justify-content: center;
+}
+
+.buttons-login input {
+    border: none;
+    border-radius: 6%;
+    background: #2c88d9;
+    cursor: pointer;
+    color: white;
+    margin: 20px 15px 0 15px;
+    padding: 10px 15px;
+    font-size: 15px;
+}
+
+.patient-show-main {
+    display: flex;
+    flex-direction: column;
+}
+
+.patient-show-doctors-flex {
+    display: flex;
+    justify-content: space-between;
+}
+
+.patient-show-doctors-flex .patient-show-doctor {
+    padding-left: 25px !important;
+}
+
+.patient-show-doctors-flex .patient-show-assign-doctor {
+    border: grey 1px solid;
+    padding: 5px 15px;
+    height: fit-content;
+}
+
+.hospitalization-create {
+    display: flex;
+    justify-content: center;
+}
+
+.hospitalization-create .hospitalization-form {
+    width: fit-content;
+}
+
+th {
+    background: #96c3ec;
+    padding: 3px 25px 3px 10px;
+    margin: 0;
+}
+
+td {
+    padding: 3px 25px 3px 10px;
+    background: #c3cfd9;
+}
+
+.messages {
+    width: 97.5%;
+    top: 60px;
+    margin: 0 auto;
+    left: auto;
+    height: fit-content;
+    border-radius: 5%;
+    position: absolute;
+    cursor: pointer;
+    z-index: 0;
+}
+
+.messages .error {
+    padding: 15px;
+    text-decoration: none;
+    background: #ebccd1;
+    color: #a94442;
+}
+
+.messages .success {
+    padding: 15px;
+    text-decoration: none;
+    background: #d6e9c6;
+    color: #3c763d;
+}
+
+.flex-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.form-subcategory {
+    margin: 10px 0;
+    border: 1px grey solid;
+    display: flex;
+    flex-direction: column;
+    width: 40%;
+    align-items: center;
+}
+
+.page-title-big {
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.subcategory-fields {
+    display: flex;
+    width: 90%;
+    flex-direction: column;
+    margin: 10px 0;
+}
+
+.subcategory-fields input {
+    margin: 10px 0;
+}
+
+.multiple-category {
+    display: flex;
+    flex-direction: column;
+    border: 1px green solid;
+    padding-left: 10px !important;
+    margin: 5px 0;
+}
+
+.no-padding {
+    margin: 5px 0;
+    padding: 0 !important;
+}
+
+.hidden-fields {
+    display: none;
+    flex-direction: column;
+}
+
+.cambio-box {
+    background: #96c3ec;
+    padding: 10px !important;
+    margin: 10px 0;
+}
+
+.evolucion-box {
+    background: #c3cfd9;
+    padding: 10px !important;
+    margin: 10px 0;
+}
+
+.cambio-box h3, .evolucion-box h3 {
+    margin-top: 0;
+    margin-bottom: 5px;
+}
+
+#all {
+    display: block;
+}
+
+#only-changes {
+    display: none;
+}
+
+#only-evoluciones {
+    display: none;
+}
+
+.no-activo {
+    opacity: 50%;
+}
+
+.doctor-flex {
+    display: flex;
+}
+
+.doctor {
+    background: #c3cfd9;
+    padding: 10px;
+    margin: 10px;
+    width: fit-content;
+}
+
+.doctor div {
+    margin: 5px 0;
+}
+
+.title-with-pdf {
+    display: flex;
+    justify-content: space-between
+}
+
+.title-with-pdf h3 {
+    margin: auto 0;
+}
+
+.title-with-pdf .buttons {
+    margin: auto 0;
+    height: fit-content;
+}
+
+.alert-box {
+    background: #c3cfd9;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 5px 0;
+}

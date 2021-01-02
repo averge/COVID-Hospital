@@ -1,0 +1,137 @@
+{% extends 'base.html' %}
+
+{% block title %}Paciente {{ paciente.nombre_y_apellido }}{% endblock %}
+
+{% block content %}
+    <div class="show-patient-main big-font">
+        <div class="title-with-pdf">
+            <h3>Patient {{ paciente.nombre_y_apellido }}</h3>
+            <div class="buttons">
+                <a target="_blank" href="{% url 'pacientes.generate_pdf' paciente.id %}">Generate pdf</a>
+            </div>
+        </div>
+        <hr>
+        <div class="patient-info">
+            <div class="patient-personal">
+                <div><b>DNI:</b> {{ paciente.dni }}</div>
+                <div><b>Email:</b> {{ paciente.mail }}</div>
+                <div><b>Residence:</b> {{ paciente.domicilio }}</div>
+                <div><b>Phone number:</b> {{ paciente.telefono }}</div>
+                <div><b>Date of birth:</b> {{ paciente.fecha_nacimiento|date:"d/m/Y" }}</div>
+                <div><b>Healthcare:</b> {{ paciente.obra_social }}</div>
+                {% if paciente.alta %}
+                    <div><b>Release:</b> {{ paciente.alta }}</div>
+                {% endif %}
+                {% for internacion in internaciones %}
+                    {% if internacion.fecha_obito %}
+                        <div><b>Passed away on:</b> {{ internacion.fecha_obito|date:"d/m/Y" }}</div>
+                    {% endif %}
+                {% endfor %}
+                {% if paciente.get_sistema.name != "ER" and paciente.get_sistema.name != "ICU" and not paciente.alta and current_doctor.sistema.name == paciente.get_sistema.name%}
+                    <div>
+                        <b>Discharge patient: </b>
+                        <form action="{% url 'pacientes.drop' paciente.id %}" method="post">
+                            {% csrf_token %}
+                            <input type="radio" name="tipo_alta" value="Epidemiologic" required="" id="tipo_alta_uno">
+                            <label for="tipo_alta_uno"> Epidemiologic </label>
+                            <input type="radio" name="tipo_alta" value="Healed" required="" id="tipo_alta_dos">
+                            <label for="tipo_alta_dos"> Healed </label>
+                            <button type="submit">Confirm</button>
+                        </form>
+                    </div>
+                {% endif %}
+            </div>
+            <div class="patient-contact">
+                <h2>Contact</h2>
+                <hr>
+                <div><b>First name:</b> {{ paciente.nombre_contacto }}</div>
+                <div><b>Last name:</b> {{ paciente.apellido_contacto }}</div>
+                <div><b>Phone number:</b> {{ paciente.telefono_contacto }}</div>
+                <div><b>Kinship:</b> {{ paciente.parentesco_contacto }}</div>
+            </div>
+        </div>
+
+        {% if paciente.get_internacion_activa and current_doctor.sistema.name == paciente.get_sistema.name %}
+            <div class="buttons">
+                <a class="left-button" href="{% url 'pacientes.obito' paciente.id %}">Declare death</a>
+            </div>
+        {% endif %}
+
+        <hr>
+        <div>
+            <div>Personal history:</div>
+            <div>{{ paciente.antecedentes_personales }}</div>
+        </div>
+        {% if internaciones or not paciente.esta_internado %}
+            <hr>
+        {% endif %}
+        {% if internaciones %}
+            <div>Hospitalizations:</div>
+            <table>
+                <tr>
+                    <th>Cause</th>
+                    <th>Hospitalization date</th>
+                    <th>Discharge date</th>
+                </tr>
+                {% for internacion in internaciones %}
+                    <tr>
+                        <td><a href="{% url 'internaciones.show' id_=paciente.id id_2=internacion.id %}">{{ internacion.enfermedad_actual }}</a></td>
+                        <td>{{ internacion.fecha_internacion|date:"d/m/Y" }}</td>
+                        <td>
+                            {% if internacion.fecha_egreso %}
+                                {{ internacion.fecha_egreso|date:"d/m/Y" }}
+                            {% elif internacion.fecha_obito %}
+                                {{ internacion.fecha_obito|date:"d/m/Y" }}
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+
+            </table>
+        {% endif %}
+        {% if not paciente.esta_internado and not paciente.obito %}
+            <div class="buttons">
+                <a class="left-button" href="{% url 'internaciones.create' paciente.id %}">New hospitalization</a>
+            </div>
+        {% endif %}
+        {% if assigned_doctors %}
+            <hr>
+            <div class="patient-show-doctors-flex">
+                <div>
+                    Doctors
+                    {% for medico in assigned_doctors %}
+                        <form action="{% url 'pacientes.unassign_doctors' paciente.id medico.id %}" method="post">
+                            {% csrf_token %}
+                            <div class="patient-show-doctor buttons">
+                                {{ medico.nombre }} {{ medico.apellido }}
+                                {% if not medico.es_jefe and request.session.tipo_medico == "jefe" %}
+                                    <input type="submit" value="Unassign">
+                                {% endif %}
+                            </div>
+                        </form>
+                    {% endfor %}
+                </div>
+                {% if request.session.tipo_medico == "jefe" and current_doctor.sistema.name == paciente.get_sistema.name %}
+                    {% if has_unassigned_doctors %}
+                        <div class="patient-show-assign-doctor">
+                            <form action="{% url 'pacientes.assign_doctors' paciente.id %}" method="post">
+                                {% csrf_token %}
+                                {% for medico in not_assigned_doctors %}
+                                    {% if not medico in paciente.medicos.all %}
+                                        <div>
+                                            {{ medico.nombre }} {{ medico.apellido }}
+                                            <input type="checkbox" id="medico{{ medico.id }}" name="medico{{ medico.id }}" value="{{ medico.id }}">
+                                        </div>
+                                    {% endif %}
+                                {% endfor %}
+                                <div class="buttons">
+                                    <input type="submit" value="Assign doctors">
+                                </div>
+                            </form>
+                        </div>
+                    {% endif %}
+                {% endif %}
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}

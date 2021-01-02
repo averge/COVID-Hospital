@@ -1,0 +1,273 @@
+{% extends 'base.html' %}
+
+{% block title %}New Evolution{% endblock %}
+
+{% block content %}
+    <form class="big-font flex-form" action="{% url 'evoluciones.create' id_p id_i %}" method="post">
+        {% csrf_token %}
+        <div class="form-subcategory">
+            <div class="page-title-big">Vital signs</div>
+            <div class="subcategory-fields">
+                {{ form.temperatura.errors }}
+                <label for="{{ form.temperatura.id_for_label }}">{{ form.temperatura.label }}:</label>
+                {{ form.temperatura }}
+
+                {{ form.ta_sistolica.errors }}
+                <label for="{{ form.ta_sistolica.id_for_label }}">{{ form.ta_sistolica.label }}:</label>
+                {{ form.ta_sistolica }}
+
+                {{ form.ta_diastolica.errors }}
+                <label for="{{ form.ta_diastolica.id_for_label }}">{{ form.ta_diastolica.label }}:</label>
+                {{ form.ta_diastolica }}
+
+                {{ form.frecuencia_cardiaca.errors }}
+                <label for="{{ form.frecuencia_cardiaca.id_for_label }}">{{ form.frecuencia_cardiaca.label }}:</label>
+                {{ form.frecuencia_cardiaca }}
+
+                {{ form.frecuencia_respiratoria.errors }}
+                <label for="{{ form.frecuencia_respiratoria.id_for_label }}">{{ form.frecuencia_respiratoria.label }}:</label>
+                {{ form.frecuencia_respiratoria }}
+            </div>
+        </div>
+        <div class="form-subcategory">
+            <div class="page-title-big">Respiratory system</div>
+            <div class="subcategory-fields">
+                {{ form.mecanica_ventilatoria.errors }}
+                <label for="{{ form.mecanica_ventilatoria.id_for_label }}">{{ form.mecanica_ventilatoria.label }}:</label>
+                {{ form.mecanica_ventilatoria }}
+
+                <div id="o2-subcategory" class="">
+                    <div class="no-padding">
+                        {{ form.requiere_o2_suplementario.errors }}
+                        <label for="{{ form.requiere_o2_suplementario.id_for_label }}">{{ form.requiere_o2_suplementario.label }}:</label>
+                        {{ form.requiere_o2_suplementario }}
+                    </div>
+
+                    <div id="o2-hidden-fields" class="hidden-fields">
+                        <label for="o2_type">Suplementary O2 type</label>
+                        <ul>
+                            <li>
+                                <label>
+                                    <input id="canula-checkbox" name="o2_type" type="radio">
+                                    Nasal Cannula
+                                </label>
+                            </li>
+                            <li>
+                                <label>
+                                    <input id="mascara-checkbox" name="o2_type" type="radio">
+                                    Non-rebreather mask
+                                </label>
+                            </li>
+                        </ul>
+
+                        <div id="canula-hidden-fields" class="hidden-fields">
+                            {{ form.canula_nasal.errors }}
+                            <label for="{{ form.canula_nasal.id_for_label }}">{{ form.canula_nasal.label }}:</label>
+                            {{ form.canula_nasal }}
+                        </div>
+
+                        <div id="mascara-hidden-fields" class="hidden-fields">
+                            {{ form.mascara_con_reservorio.errors }}
+                            <label for="{{ form.mascara_con_reservorio.id_for_label }}">{{ form.mascara_con_reservorio.label }}:</label>
+                            {{ form.mascara_con_reservorio }}
+                        </div>
+
+                        {{ form.saturacion_o2.errors }}
+                        <label for="{{ form.saturacion_o2.id_for_label }}">{{ form.saturacion_o2.label }}:</label>
+                        {{ form.saturacion_o2 }}
+
+                        <div class="no-padding">
+                            {{ form.pafi.errors }}
+                            <label for="{{ form.pafi.id_for_label }}">{{ form.pafi.label }}:</label>
+                            {{ form.pafi }}
+                        </div>
+
+                        <div id="pafi-valor-hidden-fields" class="hidden-fields">
+                            {{ form.pafi_valor.errors }}
+                            <label for="{{ form.pafi_valor.id_for_label }}">{{ form.pafi_valor.label }}:</label>
+                            {{ form.pafi_valor }}
+                        </div>
+
+                        <div class="no-padding">
+                            {{ form.prono_vigil.errors }}
+                            <label for="{{ form.prono_vigil.id_for_label }}">{{ form.prono_vigil.label }}:</label>
+                            {{ form.prono_vigil }}
+                        </div>
+
+                        <div class="no-padding">
+                            {{ form.tos.errors }}
+                            <label for="{{ form.tos.id_for_label }}">{{ form.tos.label }}:</label>
+                            {{ form.tos }}
+                        </div>
+
+                        {{ form.disnea.errors }}
+                        <label for="{{ form.disnea.id_for_label }}">{{ form.disnea.label }}:</label>
+                        {{ form.disnea }}
+
+                        <div class="no-padding">
+                            {{ form.estabilidad_respiratoria.errors }}
+                            <label for="{{ form.estabilidad_respiratoria.id_for_label }}">{{ form.estabilidad_respiratoria.label }}:</label>
+                            {{ form.estabilidad_respiratoria }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-subcategory">
+            <div class="page-title-big">Other symptoms</div>
+            <div class="subcategory-fields">
+                <div class="no-padding">
+                    {{ form.somnolencia.errors }}
+                    <label for="{{ form.somnolencia.id_for_label }}">{{ form.somnolencia.label }}:</label>
+                    {{ form.somnolencia }}
+                </div>
+
+                <div class="no-padding">
+                    {{ form.anosmia.errors }}
+                    <label for="{{ form.anosmia.id_for_label }}">{{ form.anosmia.label }}:</label>
+                    {{ form.anosmia }}
+                </div>
+
+                <div class="no-padding">
+                    {{ form.disgeusia.errors }}
+                    <label for="{{ form.disgeusia.id_for_label }}">{{ form.disgeusia.label }}:</label>
+                    {{ form.disgeusia }}
+                </div>
+            </div>
+        </div>
+        <div class="form-subcategory">
+            <div class="page-title-big">Clinical trials realized today</div>
+            <div class="subcategory-fields">
+                <div id="rx-tx-subcategory" class="">
+                    <div class="no-padding">
+                        {{ form.rx_tx.errors }}
+                        <label for="{{ form.rx_tx.id_for_label }}">{{ form.rx_tx.label }}:</label>
+                        {{ form.rx_tx }}
+                    </div>
+
+                    <div id="rx-tx-type-hidden-fields" class="hidden-fields">
+                        {{ form.tipo_rx_tx.errors }}
+                        <label for="{{ form.tipo_rx_tx.id_for_label }}">{{ form.tipo_rx_tx.label }}:</label>
+                        {{ form.tipo_rx_tx }}
+                    </div>
+
+                    <div id="rx-tx-descripcion-hidden-fields" class="hidden-fields">
+                        {{ form.descripcion_patologico_rx_tx.errors }}
+                        <label for="{{ form.descripcion_patologico_rx_tx.id_for_label }}">{{ form.descripcion_patologico_rx_tx.label }}:</label>
+                        {{ form.descripcion_patologico_rx_tx }}
+                    </div>
+                </div>
+
+                <div id="tac-torax-subcategory" class="">
+                    <div class="no-padding">
+                        {{ form.tac_torax.errors }}
+                        <label for="{{ form.tac_torax.id_for_label }}">{{ form.tac_torax.label }}:</label>
+                        {{ form.tac_torax }}
+                    </div>
+
+                    <div id="tac-torax-type-hidden-fields" class="hidden-fields">
+                        {{ form.tipo_tac_torax.errors }}
+                        <label for="{{ form.tipo_tac_torax.id_for_label }}">{{ form.tipo_tac_torax.label }}:</label>
+                        {{ form.tipo_tac_torax }}
+                    </div>
+
+                    <div id="tac-torax-descripcion-hidden-fields" class="hidden-fields">
+                        {{ form.descripcion_patologico_tac_torax.errors }}
+                        <label for="{{ form.descripcion_patologico_tac_torax.id_for_label }}">{{ form.descripcion_patologico_tac_torax.label }}:</label>
+                        {{ form.descripcion_patologico_tac_torax }}
+                    </div>
+                </div>
+
+                <div id="ecg-subcategory" class="">
+                    <div class="no-padding">
+                        {{ form.ecg.errors }}
+                        <label for="{{ form.ecg.id_for_label }}">{{ form.ecg.label }}:</label>
+                        {{ form.ecg }}
+                    </div>
+
+                    <div id="ecg-type-hidden-fields" class="hidden-fields">
+                        {{ form.tipo_ecg.errors }}
+                        <label for="{{ form.tipo_ecg.id_for_label }}">{{ form.tipo_ecg.label }}:</label>
+                        {{ form.tipo_ecg }}
+                    </div>
+
+                    <div id="ecg-descripcion-hidden-fields" class="hidden-fields">
+                        {{ form.descripcion_patologico_ecg.errors }}
+                        <label for="{{ form.descripcion_patologico_ecg.id_for_label }}">{{ form.descripcion_patologico_ecg.label }}:</label>
+                        {{ form.descripcion_patologico_ecg }}
+                    </div>
+                </div>
+
+                <div id="pcr-subcategory" class="">
+                    <div class="no-padding">
+                        {{ form.pcr_covid.errors }}
+                        <label for="{{ form.pcr_covid.id_for_label }}">{{ form.pcr_covid.label }}:</label>
+                        {{ form.pcr_covid }}
+                    </div>
+
+                    <div id="pcr-type-hidden-fields" class="hidden-fields">
+                        {{ form.tipo_pcr_covid.errors }}
+                        <label for="{{ form.tipo_pcr_covid.id_for_label }}">{{ form.tipo_pcr_covid.label }}:</label>
+                        {{ form.tipo_pcr_covid }}
+                    </div>
+
+                    <div id="pcr-descripcion-hidden-fields" class="hidden-fields">
+                        {{ form.descripcion_pcr_covid.errors }}
+                        <label for="{{ form.descripcion_pcr_covid.id_for_label }}">{{ form.descripcion_pcr_covid.label }}:</label>
+                        {{ form.descripcion_pcr_covid }}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-subcategory">
+            <div class="page-title-big">ICU specifical fields</div>
+            <div class="subcategory-fields">
+                <div id="arm-subcategory" class="">
+                    <div class="no-padding">
+                        {{ form.arm.errors }}
+                        <label for="{{ form.arm.id_for_label }}">{{ form.arm.label }}:</label>
+                        {{ form.arm }}
+                    </div>
+
+                    <div id="arm-descripcion-hidden-fields" class="hidden-fields">
+                        {{ form.descripcion_arm.errors }}
+                        <label for="{{ form.descripcion_arm.id_for_label }}">{{ form.descripcion_arm.label }}:</label>
+                        {{ form.descripcion_arm }}
+                    </div>
+                </div>
+
+                <div class="no-padding">
+                    {{ form.traqueostomia.errors }}
+                    <label for="{{ form.traqueostomia.id_for_label }}">{{ form.traqueostomia.label }}:</label>
+                    {{ form.traqueostomia }}
+                </div>
+
+                <div id="vasopresores-subcategory" class="">
+                    <div class="no-padding">
+                        {{ form.vasopresores.errors }}
+                        <label for="{{ form.vasopresores.id_for_label }}">{{ form.vasopresores.label }}:</label>
+                        {{ form.vasopresores }}
+                    </div>
+
+                    <div id="vasopresores-descripcion-hidden-fields" class="hidden-fields">
+                        {{ form.descripcion_vasopresores.errors }}
+                        <label for="{{ form.descripcion_vasopresores.id_for_label }}">{{ form.descripcion_vasopresores.label }}:</label>
+                        {{ form.descripcion_vasopresores }}
+                    </div>
+                </div>
+            </div>
+        </div>
+        {{ form.observacion.errors }}
+        <label for="{{ form.observacion.id_for_label }}">{{ form.observacion.label }}:</label>
+        {{ form.observacion }}
+        <div class="buttons">
+            <input type="submit" value="Save">
+            <a href="{% url 'internaciones.show' id_p id_i %}">Cancel</a>
+        </div>
+    </form>
+{% endblock %}
+
+{% block scripts %}
+    {% load static %}
+    <script src="{% static 'scripts/evolution.js' %}"></script>
+{% endblock %}

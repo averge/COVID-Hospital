@@ -1,0 +1,136 @@
+{% extends 'base.html' %}
+
+{% block title %}Hospitalization of patient {{ paciente.nombre_y_apellido }}{% endblock %}
+
+{% block content %}
+    <div class="big-font">
+        <h3>Hospitalization of patient {{ paciente.nombre_y_apellido }}</h3>
+        <hr>
+        {% if paciente.get_sistema and not internacion.fecha_egreso and not internacion.fecha_obito %}
+            <div><b>Current system:</b> <a href="{% url 'sistemas.show' paciente.get_sistema.name %}">{{ paciente.get_sistema.name }}</a></div>
+            {% if permitted_systems|length == 1 %}
+                <form class="big-font" action="{% url 'pacientes.change_system' paciente.id %}" method="post">
+                    {% csrf_token %}
+                    <input hidden id="sistema_name" name="sistema_name" value="{{ permitted_systems|first }}">
+                    <div class="buttons">
+                        <input class="left-button" type="submit" value="Change to {{ permitted_systems|first }}">
+                    </div>
+                </form>
+            {% else %}
+                <div class="buttons">
+                    <a class="left-button" href="{% url 'pacientes.change_system' paciente.id %}">Change system</a>
+                </div>
+            {% endif %}
+        {% endif %}
+        <div><b>Symptoms start date:</b> {{ internacion.fecha_inicio_sintomas|date:"d/m/Y" }}</div>
+        <div><b>Hospitalization date:</b> {{ internacion.fecha_internacion|date:"d/m/Y" }}</div>
+        <div><b>Diagnostic date:</b> {{ internacion.fecha_diagnostico|date:"d/m/Y" }}</div>
+        {% if internacion.fecha_egreso %}
+            <div><b>Discharge date:</b> {{ internacion.fecha_egreso|date:"d/m/Y" }}</div>
+        {% elif internacion.fecha_obito %}
+            <div><b>Death date:</b> {{ internacion.fecha_obito|date:"d/m/Y" }}</div>
+        {% endif %}
+        {% if internacion.enfermedad_actual %}
+            <hr>
+            <div><b>Current illness:</b></div>
+            <div>{{ internacion.enfermedad_actual }}</div>
+        {% endif %}
+        {% if internacion.descripcion %}
+            <hr>
+            <div><b>Description:</b></div>
+            <div>{{ internacion.descripcion }}</div>
+        {% endif %}
+        {% if sorted_dict or lista_evoluciones or lista_cambios %}
+            <hr>
+            <div class="buttons">
+                {% if sorted_dict %}
+                    <button id="button-all">All</button>
+                {% endif %}
+                {% if lista_cambios %}
+                    <button class="no-activo" id="button-changes">System changes</button>
+                {% endif %}
+                {% if lista_evoluciones %}
+                    <button class="no-activo" id="button-evolutions">Evolution</button>
+                {% endif %}
+            </div>
+        {% endif %}
+        {% if sorted_dict %}
+            <div id="all">
+                {% for key, value in sorted_dict.items %}
+                    {% for dic in value %}
+                        {% for key2, value2 in dic.items %}
+                            {% if key2 == "cambio" %}
+                                <div class="cambio-box">
+                                    <h3>System change:</h3>
+                                    <div>
+                                        Change from: {{ value2.sistema_origen }} to {{ value2.sistema_destino }}
+                                    </div>
+                                    <div>
+                                        Date: {{ value2.fecha_cambio }}
+                                    </div>
+                                    <div>
+                                        Hour: {{ value2.hora_cambio }}
+                                    </div>
+                                </div>
+                            {% else %}
+                                <div class="evolucion-box">
+                                    <h3>Evolution:</h3>
+                                    <div>
+                                        Date: {{ value2.fecha_carga }}
+                                    </div>
+                                    <div>
+                                        Hour: {{ value2.hora_carga }}
+                                    </div>
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    {% endfor %}
+                {% endfor %}
+            </div>
+        {% endif %}
+        {% if lista_cambios %}
+            <div id="only-changes">
+                {% for cambio in lista_cambios %}
+                    <div class="cambio-box">
+                        <h3>System change:</h3>
+                        <div>
+                            Change from: {{ cambio.sistema_origen }} to {{ cambio.sistema_destino }}
+                        </div>
+                        <div>
+                            Date: {{ cambio.fecha_cambio }}
+                        </div>
+                        <div>
+                            Hour: {{ cambio.hora_cambio }}
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+        {% if lista_evoluciones %}
+            <div id="only-evoluciones">
+                {% for evolucion in lista_evoluciones %}
+                    <div class="evolucion-box">
+                        <h3>Evolution:</h3>
+                        <div>
+                            Date: {{ evolucion.fecha_carga }}
+                        </div>
+                        <div>
+                            Hour: {{ evolucion.hora_carga }}
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+        {% if paciente.get_sistema and not internacion.fecha_egreso and not internacion.fecha_obito %}
+            <hr>
+            <div class="buttons">
+                <a href="{% url 'evoluciones.create' paciente.id internacion.id %}">New evolution</a>
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}
+
+{% block scripts %}
+    {% load static %}
+    <script src="{% static 'scripts/hospitalization.js' %}"></script>
+{% endblock %}

@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block title %}Alerts{% endblock %}
+
+{% block content %}
+    {% if alertas %}
+        {% for alert in alertas %}
+            <div class="alert-box">
+                <span>
+                    {{ alert.texto }} for patient <a href="{% url 'pacientes.show' alert.paciente.id %}">{{alert.paciente.nombre_y_apellido}}</a>
+                </span>
+                <div class="buttons">
+                    <a href="{% url 'alertas.marcar_vista' alert.id %}">Seen</a>
+                </div>
+            </div>
+        {% endfor %}
+    {% else %}
+        <div class="page-title-big">There are no pending alerts</div>
+    {% endif %}
+{% endblock content %}

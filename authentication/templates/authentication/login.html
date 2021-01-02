@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block title %}Welcome{% endblock %}
+
+{% block content %}
+    <form class="login-form" action="{% url 'authentication.login' %}" method="post">
+        {% csrf_token %}
+        <div class="login-area">
+            <h1>Welcome! Please log in.</h1><br>
+            <div class="form-field-login">
+                <label for="username">Username</label>
+                <br>
+                <input type="text" name="username" id="username" placeholder="Enter your username" required>
+            </div>
+            <div class="form-field-login">
+                <label for="password">Password</label>
+                <br>
+                <input type="password" name="password" id="password" placeholder="Enter your password" required>
+            </div>
+            <div class="buttons-login">
+                <input type="submit" value="Login">
+            </div>
+        </div>
+    </form>
+{% endblock %}

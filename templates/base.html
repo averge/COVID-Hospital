@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        {% load static %}
+        <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
+        <title>{% block title %}Untitled page{% endblock %}</title>
+    </head>
+    <body>
+        <div class="flex-main">
+            {% include 'header.html' %}
+            <div id="content">
+                {% if messages %}
+                    <div class="messages">
+                        {% for message in messages %}
+                        <div{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+                {% block content %}{% endblock %}
+            </div>
+        </div>
+        <script src="{% static 'scripts/main.js' %}"></script>
+        <script src="https://unpkg.com/ionicons@5.2.3/dist/ionicons.js"></script>
+        {% block scripts %}{% endblock %}
+    </body>
+</html>

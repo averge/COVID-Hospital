@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block title %}New Hospitalization{% endblock %}
+
+{% block content %}
+    <div class="hospitalization-create">
+        <form class="big-font hospitalization-form" action="{% url 'internaciones.create' paciente_id %}" method="post">
+            {% csrf_token %}
+            <h3>Hospitalization information</h3>
+            <div class="form-field">
+                {{ form.fecha_inicio_sintomas.errors }}
+                <label for="{{ form.fecha_inicio_sintomas.id_for_label }}">{{ form.fecha_inicio_sintomas.label }}:</label>
+                {{ form.fecha_inicio_sintomas }}
+            </div>
+            <div class="form-field">
+                {{ form.fecha_diagnostico.errors }}
+                <label for="{{ form.fecha_diagnostico.id_for_label }}">{{ form.fecha_diagnostico.label }}:</label>
+                {{ form.fecha_diagnostico }}
+            </div>
+            <div class="form-field">
+                {{ form.enfermedad_actual.errors }}
+                <label for="{{ form.enfermedad_actual.id_for_label }}">{{ form.enfermedad_actual.label }}:</label>
+                {{ form.enfermedad_actual }}
+            </div>
+            <div class="form-field">
+                {{ form.descripcion.errors }}
+                <label for="{{ form.descripcion.id_for_label }}">{{ form.descripcion.label }}:</label>
+                {{ form.descripcion }}
+            </div>
+            <div class="buttons">
+                <input type="submit" value="Save">
+                {% if request.session.tipo_medico == "jefe" %}
+                    <a href="{% url 'sistemas.index' %}">Cancel</a>
+                {% else %}
+                    <a href="{% url 'sistemas.show' request.session.sistema_medico %}">Cancel</a>
+                {% endif %}
+            </div>
+        </form>
+    </div>
+{% endblock %}

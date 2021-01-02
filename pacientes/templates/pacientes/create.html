@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+
+{% block title %}New Patient{% endblock %}
+
+{% block content %}
+    <form class="big-font" action="{% url 'pacientes.create' %}" method="post">
+        {% csrf_token %}
+        <input hidden id="new_patient" name="new_patient" value="{{ new_patient }}">
+        <div class="new-patient-dni">
+            <div class="form-field">
+                {{ form.dni.errors }}
+                {{ form.dni }}
+            </div>
+        </div>
+        <hr>
+        <div class="patient-info">
+            <div class="patient-personal">
+                <div class="form-field">
+                    {{ form.nombre_y_apellido.errors }}
+                    <label for="{{ form.nombre_y_apellido.id_for_label }}">{{ form.nombre_y_apellido.label }}:</label>
+                    {{ form.nombre_y_apellido }}
+                </div>
+                <div class="form-field">
+                    {{ form.telefono.errors }}
+                    <label for="{{ form.telefono.id_for_label }}">{{ form.telefono.label }}:</label>
+                    {{ form.telefono }}
+                </div>
+                <div class="form-field">
+                    {{ form.mail.errors }}
+                    <label for="{{ form.mail.id_for_label }}">{{ form.mail.label }}:</label>
+                    {{ form.mail }}
+                </div>
+                <div class="form-field">
+                    {{ form.obra_social.errors }}
+                    <label for="{{ form.obra_social.id_for_label }}">{{ form.obra_social.label }}:</label>
+                    {{ form.obra_social }}
+                </div>
+                <div class="form-field">
+                    {{ form.domicilio.errors }}
+                    <label for="{{ form.domicilio.id_for_label }}">{{ form.domicilio.label }}:</label>
+                    {{ form.domicilio }}
+                </div>
+                <div class="form-field">
+                    {{ form.fecha_nacimiento.errors }}
+                    <label for="{{ form.fecha_nacimiento.id_for_label }}">{{ form.fecha_nacimiento.label }}:</label>
+                    {{ form.fecha_nacimiento }}
+                </div>
+            </div>
+            <div class="patient-contact">
+                <h2>Contact</h2>
+                <hr>
+                <div class="form-field">
+                    {{ form.nombre_contacto.errors }}
+                    <label for="{{ form.nombre_contacto.id_for_label }}">{{ form.nombre_contacto.label }}:</label>
+                    {{ form.nombre_contacto }}
+                </div>
+                <div class="form-field">
+                    {{ form.apellido_contacto.errors }}
+                    <label for="{{ form.apellido_contacto.id_for_label }}">{{ form.apellido_contacto.label }}:</label>
+                    {{ form.apellido_contacto }}
+                </div>
+                <div class="form-field">
+                    {{ form.telefono_contacto.errors }}
+                    <label for="{{ form.telefono_contacto.id_for_label }}">{{ form.telefono_contacto.label }}:</label>
+                    {{ form.telefono_contacto }}
+                </div>
+                <div class="form-field">
+                    {{ form.parentesco_contacto.errors }}
+                    <label for="{{ form.parentesco_contacto.id_for_label }}">{{ form.parentesco_contacto.label }}:</label>
+                    {{ form.parentesco_contacto }}
+                </div>
+            </div>
+        </div>
+        <hr>
+        <div class="form-field">
+            {{ form.antecedentes_personales.errors }}
+            <label for="{{ form.antecedentes_personales.id_for_label }}">{{ form.antecedentes_personales.label }}:</label>
+            <br>
+            {{ form.antecedentes_personales }}
+        </div>
+        <div class="buttons">
+            <input type="submit" value="Save">
+            {% if request.session.tipo_medico == "jefe" %}
+                <a href="{% url 'sistemas.index' %}">Cancel</a>
+            {% else %}
+                <a href="{% url 'sistemas.show' request.session.sistema_medico %}">Cancel</a>
+            {% endif %}
+        </div>
+    </form>
+{% endblock content %}
+
+{% block scripts %}
+    {% load static %}
+    <script src="{% static 'scripts/patient_data.js' %}"></script>
+{% endblock scripts %}

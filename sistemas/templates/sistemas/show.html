@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ sistema.name }} system{% endblock %}
+
+{% block content %}
+    <div class="sistema-flex-main">
+        <div class="sistema-salas">
+            {% if sistema.sala_set.all %}
+                {% for sala in sistema.sala_set.all %}
+                    {% if sala.cama_set.all %}
+                        <div class="sala-info">
+                            <h2>{{ sala.name }}</h2>
+                            <hr>
+                            {% for cama in sala.cama_set.all %}
+                                <p>
+                                    {{ cama.name }}:
+                                    {% if cama.paciente %}
+                                        <a href="{% url 'pacientes.show' cama.paciente.id %}">Patient {{ cama.paciente.nombre_y_apellido }}</a>
+                                    {% else %}
+                                        Unocuppied
+                                    {% endif %}
+                                </p>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            {% else %}
+                <h2>There are no wards in {{ sistema.name }} system</h2>
+            {% endif %}
+        </div>
+        <div class="sistema-camas">
+            <h2>Bed availability</h2>
+            <hr>
+            <p>Unocuppied beds: {{ sistema.camas_libres }}</p>
+            <p>Ocuppied beds: {{ sistema.camas_ocupadas }}</p>
+            <p>Total beds: {{ sistema.camas_totales }}</p>
+            {% if request.session.tipo_medico == "jefe" %}
+                <div class="buttons">
+                    <a href="{% url 'medicos.index' sistema.name %}">
+                        Doctors
+                    </a>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

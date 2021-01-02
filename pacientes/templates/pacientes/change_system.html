@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block title %}System change{% endblock %}
+
+{% block content %}
+    <form class="big-font" action="{% url 'pacientes.change_system' paciente.id %}" method="post">
+        {% csrf_token %}
+        <h3>System change</h3>
+        <label for="sistema_name">Select system to change the patient to: </label>
+        <select id="sistema_name" name="sistema_name">
+            {% for sistema in permitted_systems %}
+                <option value="{{ sistema }}">{{ sistema }}</option>
+            {% endfor %}
+        </select>
+        <div class="buttons">
+            <input type="submit" value="Change system">
+            <a href="{% url 'pacientes.show' paciente.id %}">Cancel</a>
+        </div>
+    </form>
+{% endblock %}

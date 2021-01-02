@@ -1,0 +1,18 @@
+[
+  {
+    "model": "reglas.ConfiguracionRegla",
+    "pk": 1,
+    "fields": {
+      "key": "saturacion_oxigeno",
+      "value": 80
+    }
+  },
+  {
+    "model": "reglas.ConfiguracionRegla",
+    "pk": 2,
+    "fields": {
+      "key": "frecuencia_respiratoria",
+      "value": 40
+    }
+  }
+]

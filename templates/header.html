@@ -1,0 +1,20 @@
+{% if request.session.username %}
+    <header>
+        <div>
+            {% if request.session.tipo_medico == "jefe" %}
+                <a class="home-icon" href="{% url 'sistemas.index' %}">
+                    <ion-icon name="people-circle-outline"></ion-icon>
+                </a>
+            {% else %}
+                <a class="home-icon" href="{% url 'sistemas.show' request.session.sistema_medico %}">
+                    <ion-icon name="person-circle-outline"></ion-icon>
+                </a>
+            {% endif %}
+        </div>
+        <div class="buttons">
+            <a href="{% url 'pacientes.create' %}">New Patient</a>
+            <a href="{% url 'alertas.index' %}">Alerts</a>
+            <a href="{% url 'authentication.logout' %}">Log out</a>
+        </div>
+    </header>
+{% endif %}

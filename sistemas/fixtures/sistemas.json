@@ -1,0 +1,42 @@
+[
+  {
+    "model": "sistemas.sistema",
+    "pk": 1,
+    "fields": {
+      "name": "ER",
+      "camas_infinitas": false
+    }
+  },
+  {
+    "model": "sistemas.sistema",
+    "pk": 2,
+    "fields": {
+      "name": "COVID floor",
+      "camas_infinitas": false
+    }
+  },
+  {
+    "model": "sistemas.sistema",
+    "pk": 3,
+    "fields": {
+      "name": "ICU",
+      "camas_infinitas": false
+    }
+  },
+  {
+    "model": "sistemas.sistema",
+    "pk": 4,
+    "fields": {
+      "name": "Hotel",
+      "camas_infinitas": false
+    }
+  },
+  {
+    "model": "sistemas.sistema",
+    "pk": 5,
+    "fields": {
+      "name": "Residence",
+      "camas_infinitas": true
+    }
+  }
+]

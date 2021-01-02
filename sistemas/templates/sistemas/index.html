@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block title %}Dashboard de jefes{% endblock %}
+
+{% block content %}
+    <div class="sistemas">
+        {% for sistema in sistemas %}
+            <div class="caja-sistema">
+                <a href="{% url 'sistemas.show' sistema.name %}">{{ sistema.name }}</a>
+                <hr>
+                <p>Unocuppied beds: {{ sistema.camas_libres }}</p>
+                <p>Ocuppied beds: {{ sistema.camas_ocupadas }}</p>
+                <p>Total beds: {{ sistema.camas_totales }}</p>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}
